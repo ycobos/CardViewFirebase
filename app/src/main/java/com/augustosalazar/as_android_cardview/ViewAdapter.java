@@ -23,7 +23,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder>{
     private String[] data;
     private RecyclerClickListner mRecyclerClickListner;
 
-    public ViewAdapter(ValueEventListener context,String[] data){
+    public ViewAdapter(Context context,String[] data){
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.data = data;
@@ -34,7 +34,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.MyViewHolder>{
         View v = inflater.inflate(R.layout.custom_row, parent, false);
         MyViewHolder holder = new MyViewHolder(v);
         return holder;
-        
+
     }
 
     @Override

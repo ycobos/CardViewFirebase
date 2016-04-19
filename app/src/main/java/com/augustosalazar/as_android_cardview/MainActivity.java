@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements ViewAdapter.Recyc
                 String[] llaves = new String[keys.size()];
                 llaves = keys.toArray(llaves);
 
-                viewAdapter = new ViewAdapter(this, nombres);
+                viewAdapter = new ViewAdapter(MainActivity.this, nombres);
                 //viewAdapter.setRecyclerClickListner(this);
                 mRecyclerView.setAdapter(viewAdapter);
             }
@@ -109,6 +109,63 @@ public class MainActivity extends AppCompatActivity implements ViewAdapter.Recyc
 
             }
         });
+
+
+        Button CambiarDB = (Button) findViewById(R.id.CambiarBtn);
+        CambiarDB.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.custom_dialog);
+                dialog.show();
+
+                final EditText mMessageEdit = (EditText) dialog.findViewById(R.id.DialogEditText);
+
+
+                Button AgregarBtn = (Button) dialog.findViewById(R.id.CrearBtn);
+                AgregarBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String nombreBD = mMessageEdit.getText().toString();
+                        BaseDatos = nombreBD;
+                        miFirebaseRef = new Firebase("https://" + BaseDatos + ".firebaseio.com/");
+                        miFirebaseRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                ArrayList<String> names = new ArrayList<String>();
+                                ArrayList<String> keys = new ArrayList<String>();
+
+
+                                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                                    names.add(postSnapshot.child("name").getValue().toString());
+                                    keys.add(postSnapshot.getRef().getKey().toString());
+                                }
+                                String[] nombres = new String[names.size()];
+                                nombres = names.toArray(nombres);
+                                String[] llaves = new String[keys.size()];
+                                llaves = keys.toArray(llaves);
+
+
+                                viewAdapter = new ViewAdapter(MainActivity.this, nombres);
+                                //viewAdapter.setRecyclerClickListner(this);
+                                mRecyclerView.setAdapter(viewAdapter);
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+                        dialog.dismiss();
+
+                    }
+                });
+
+            }
+        });
+
 
 
 
