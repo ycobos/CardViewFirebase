@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements ViewAdapter.Recyc
 
 
                                 viewAdapter = new ViewAdapter(MainActivity.this, nombres);
-                                //viewAdapter.setRecyclerClickListner(this);
+                                //viewAdapter.setRecyclerClickListner(this); 99
                                 mRecyclerView.setAdapter(viewAdapter);
                             }
 
